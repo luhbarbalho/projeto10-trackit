@@ -91,6 +91,7 @@ const GlobalStyle = createGlobalStyle`
     font: inherit;
     vertical-align: baseline;
     box-sizing: border-box;
+    font-family: 'Lexend Deca', sans-serif;
 }
 `;
 
