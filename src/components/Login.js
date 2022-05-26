@@ -1,22 +1,24 @@
 import { useState } from 'react';
-import { Link, useParams  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Logo from '../assets/TrackItLogo2.png';
 
 export default function Start() {
-    const params = useParams();
-    console.log(params)
     
-    const [infoCliente, setInfoCliente] = useState([]);
     const [emailForm, setEmailForm] = useState("");
     const [senhaForm, setSenhaForm] = useState("");
+    const [ disabled, setDisabled ] = useState( false );
+    const navigate = useNavigate();
 
 
+    //TODO: colocar o spinner para mostrar q está loading na tela de login
 
+    //* SUBMIT FORM PARA LOGIN -> RECEBE O TOKEN NA RESPONSE.DATA
+    
     function SubmitLogIn (event) {
         event.preventDefault();
-        console.log(senhaForm)
+        console.log("senha", senhaForm)
 
         const sendForm = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`,
         {
@@ -24,11 +26,22 @@ export default function Start() {
             password: senhaForm,
         });
 
-        sendForm.then(response => {
-            setInfoCliente([...response.data]);
-            console.log("alo", infoCliente)
-             //TODO: ver para onde vai levar essa info, usar navigate?
-        })  
+        sendForm
+        .then(response => {
+            console.log("alo", response.data);
+            navigate(`/habitos`);
+        })
+        .catch(error => {
+            //TODO: fazer um ternario com tipos de erros básicos (409 = conflito pois já existe esse email cadastrado) entre outros
+            console.log(error);
+        })
+    }
+
+
+    //* BLOQUEANDO OS INPUTS APÓS O CLICAR EM LOGIN
+    
+    function blockInputs() {
+        setDisabled(!disabled);
     }
 
     return (
@@ -40,23 +53,41 @@ export default function Start() {
                 </MainTitle>
                 <Form onSubmit={SubmitLogIn}>
                     
-                    {emailForm}
-                    <Input type="email" placeholder="email" onChange={(e) => setEmailForm(e.target.value)} value={emailForm} required />
-                    {senhaForm}
-                    <Input type="password" id="senha" placeholder="senha" onChange={(e) => setSenhaForm(e.target.value)} value={senhaForm} required />
-                        
-                    <Button type="submit" name="Entrar">Entrar</Button>
+
+                    <Input
+                        type="email"
+                        placeholder="email" 
+                        onChange={(e) => setEmailForm(e.target.value)}
+                        value={ emailForm } 
+                        disabled= { disabled }
+                        required
+                    />
+
+                    <Input
+                        type="password"
+                        id="senha"
+                        placeholder="senha"
+                        onChange={(e) => setSenhaForm(e.target.value)}
+                        value={ senhaForm }
+                        disabled= { disabled }
+                        required
+                    />
+                            
+                    <Button type="submit" name="Entrar" onClick={blockInputs}>Entrar</Button>
 
                 </Form>
                 <Link to="/cadastro">
-                        <CadastreSe>
-                            <p>Não tem uma conta? Cadastre-se!</p>
-                        </CadastreSe>
-                    </Link>
+                    <CadastreSe>
+                        <p>Não tem uma conta? Cadastre-se!</p>
+                    </CadastreSe>
+                </Link>
             </ScreenLogIn>
         </>
     );
 }
+
+
+    //* STYLED COMPONENTS
 
 const ScreenLogIn = styled.div `
     width: 100vw;
