@@ -1,8 +1,7 @@
-
+import { useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import Footer from './Footer';
-import { useState } from 'react';
 
 export default function HabitosZerado() {
     //*ZeroHabitos é usado apenas para decidir se o cliente já tem algum hábito ou não
@@ -34,13 +33,13 @@ export default function HabitosZerado() {
                     <AddHabito>
                         <NomeHabito type="text" placeholder="nome do hábito"></NomeHabito>
                         <DiasSemana>
-                            <Button active={dia === 0} onClick={ () => setDia(0) } >D</Button>
-                            <Button active={dia === 1} onClick={ () => setDia(1) } >S</Button>
-                            <Button active={dia === 2} onClick={ () => setDia(2) } >T</Button>
-                            <Button active={dia === 3} onClick={ () => setDia(3) } >Q</Button>
-                            <Button active={dia === 4} onClick={ () => setDia(4) } >Q</Button>
-                            <Button active={dia === 5} onClick={ () => setDia(5) } >S</Button>
-                            <Button active={dia === 6} onClick={ () => setDia(6) } >S</Button>
+                            <ButtonDia active={dia === 0} onClick={ () => setDia(0) } >D</ButtonDia>
+                            <ButtonDia active={dia === 1} onClick={ () => setDia(1) } >S</ButtonDia>
+                            <ButtonDia active={dia === 2} onClick={ () => setDia(2) } >T</ButtonDia>
+                            <ButtonDia active={dia === 3} onClick={ () => setDia(3) } >Q</ButtonDia>
+                            <ButtonDia active={dia === 4} onClick={ () => setDia(4) } >Q</ButtonDia>
+                            <ButtonDia active={dia === 5} onClick={ () => setDia(5) } >S</ButtonDia>
+                            <ButtonDia active={dia === 6} onClick={ () => setDia(6) } >S</ButtonDia>
                         </DiasSemana>
                         
                         <SalvaCancela>
@@ -108,6 +107,18 @@ const Button = styled.button `
     }
 `
 
+const ButtonDia = styled.button`
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+    border: 0.8px solid #D4D4D4;
+    background-color: #FFFFFF;
+    color: #DBDBDB;
+    font-size: 20px;
+    border-radius: 5px;
+    padding: 2px;
+`
+
 const Mensagem = styled.div `
     font-size: 18px;
     line-height: 22px;
@@ -152,6 +163,7 @@ const DiasSemana = styled.div `
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-left: 3px;
 `
 
 const Dia = styled.div `

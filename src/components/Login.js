@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Logo from '../assets/TrackItLogo2.png';
+import { Oval } from  'react-loader-spinner'
 
-export default function Start() {
+export default function Start(props) {
     
     const [emailForm, setEmailForm] = useState("");
     const [senhaForm, setSenhaForm] = useState("");
@@ -28,10 +29,12 @@ export default function Start() {
 
         sendForm
         .then(response => {
+            props.setSpinnerLoading(!props.spinnerLoading);
             navigate(`/habitos`);
         })
         .catch(error => {
             //TODO: fazer um ternario com tipos de erros básicos para o alert (409 = conflito pois já existe esse email cadastrado) entre outros
+            props.setSpinnerLoading(props.spinnerLoading); //será que se ficar girando no erro a pessoa fica irritada?
             console.log(error);
         })
     }
@@ -41,6 +44,7 @@ export default function Start() {
     
     function blockInputs() {
         setDisabled(!disabled);
+        props.setSpinnerLoading(!props.spinnerLoading);
     }
 
     return (
@@ -72,7 +76,14 @@ export default function Start() {
                         required
                     />
                             
-                    <Button type="submit" name="Entrar" onClick={blockInputs}>Entrar</Button>
+                    <Button
+                        type="submit"
+                        name="Entrar"
+                        onClick={blockInputs}>
+                        
+                        {props.spinnerLoading ? <Oval color="#ffffff" height={25} width={25} /> : "Entrar"}
+                    
+                    </Button>
 
                 </Form>
                 <Link to="/cadastro">
@@ -153,6 +164,9 @@ const Input = styled.input`
 const Button = styled.button`
     height: 42px;
     width: 308px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 21px;
     color: white;
     background-color: #52B6FF;

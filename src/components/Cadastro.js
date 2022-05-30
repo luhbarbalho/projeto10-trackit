@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import Logo from '../assets/TrackItLogo2.png';
+import { Oval } from  'react-loader-spinner'
 
-export default function Cadastro() {
+export default function Cadastro( props ) {
     
     const [ emailForm, setEmailForm ] = useState("");
     const [ senhaForm, setSenhaForm ] = useState("");
@@ -31,10 +32,12 @@ export default function Cadastro() {
         const sendForm = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`, body)
         
         .then(response => {
-            console.log(response.data)
+            console.log(response.data);
+            props.setSpinnerLoading(!props.spinnerLoading);
             navigate(`/`);
         })
         .catch(error => {
+            props.setSpinnerLoading(props.spinnerLoading); //será que se ficar girando no erro a pessoa fica irritada?
             console.log(error)
         })
     }
@@ -43,6 +46,7 @@ export default function Cadastro() {
 
     function blockInputs() {
         setDisabled(!disabled);
+        props.setSpinnerLoading(!props.spinnerLoading); 
     }
 
 
@@ -65,7 +69,7 @@ export default function Cadastro() {
                     />
 
                     <Input
-                        type="password"
+                        type="text"
                         id="senha"
                         placeholder="senha"
                         onChange={(e) => setSenhaForm(e.target.value)}
@@ -98,7 +102,9 @@ export default function Cadastro() {
                         type="submit"
                         name="Entrar"
                         onClick={blockInputs}>
-                        Cadastrar
+                        
+                        {props.spinnerLoading ? <Oval color="#ffffff" height={25} width={25} /> : "Cadastrar"}
+
                     </Button>
 
                 </Form>
@@ -179,6 +185,9 @@ const Input = styled.input`
 const Button = styled.button`
     height: 42px;
     width: 308px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 21px;
     color: white;
     background-color: #52B6FF;
