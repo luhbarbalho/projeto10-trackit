@@ -30,7 +30,6 @@ export default function Cadastro() {
 
         const sendForm = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up`, body)
         
-        sendForm
         .then(response => {
             console.log(response.data)
             navigate(`/`);
@@ -41,7 +40,7 @@ export default function Cadastro() {
     }
 
     //* BLOQUEANDO OS INPUTS APÓS O CLICAR EM CADASTRAR
-    
+
     function blockInputs() {
         setDisabled(!disabled);
     }
@@ -56,7 +55,6 @@ export default function Cadastro() {
                 </MainTitle>
                 <Form onSubmit={SubmitCadastro}>
                     
-                    {emailForm}
                     <Input
                         type="email"
                         placeholder="email"

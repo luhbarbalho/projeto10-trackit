@@ -28,11 +28,10 @@ export default function Start() {
 
         sendForm
         .then(response => {
-            console.log("alo", response.data);
             navigate(`/habitos`);
         })
         .catch(error => {
-            //TODO: fazer um ternario com tipos de erros básicos (409 = conflito pois já existe esse email cadastrado) entre outros
+            //TODO: fazer um ternario com tipos de erros básicos para o alert (409 = conflito pois já existe esse email cadastrado) entre outros
             console.log(error);
         })
     }

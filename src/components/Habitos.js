@@ -2,16 +2,18 @@
 import styled from 'styled-components';
 import Header from './Header';
 import Footer from './Footer';
-import { useState } from 'react/cjs/react.development';
+import { useState } from 'react';
 
 export default function HabitosZerado() {
-    
+    //*ZeroHabitos é usado apenas para decidir se o cliente já tem algum hábito ou não
     const [ zeroHabitos, setZeroHabitos ] = useState( false );
-                //TODO: mudar estado para false quando for iniciar real
-    
+                //TODO: mudar estado para true quando for iniciar real
     function passar () {
         setZeroHabitos( false )
     }
+    
+    const [ dia, setDia ] = useState([])
+    console.log(dia);
     
     return (
         <>
@@ -30,17 +32,15 @@ export default function HabitosZerado() {
                     </>
                 :
                     <AddHabito>
-                        <NomeHabito
-                            type="text" placeholder="nome do hábito">
-                        </NomeHabito>
+                        <NomeHabito type="text" placeholder="nome do hábito"></NomeHabito>
                         <DiasSemana>
-                            <Dia>D</Dia>
-                            <Dia>S</Dia>
-                            <Dia>T</Dia>
-                            <Dia>Q</Dia>
-                            <Dia>Q</Dia>
-                            <Dia>S</Dia>
-                            <Dia>S</Dia>
+                            <Button active={dia === 0} onClick={ () => setDia(0) } >D</Button>
+                            <Button active={dia === 1} onClick={ () => setDia(1) } >S</Button>
+                            <Button active={dia === 2} onClick={ () => setDia(2) } >T</Button>
+                            <Button active={dia === 3} onClick={ () => setDia(3) } >Q</Button>
+                            <Button active={dia === 4} onClick={ () => setDia(4) } >Q</Button>
+                            <Button active={dia === 5} onClick={ () => setDia(5) } >S</Button>
+                            <Button active={dia === 6} onClick={ () => setDia(6) } >S</Button>
                         </DiasSemana>
                         
                         <SalvaCancela>
