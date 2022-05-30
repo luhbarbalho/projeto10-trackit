@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { CircularProgressbar } from 'react-circular-progressbar';
+import "react-circular-progressbar/dist/styles.css";
 
 export default function HabitosZerado() {
 
@@ -24,6 +25,10 @@ export default function HabitosZerado() {
                             path: {
                                 stroke: `#ffffff`,
                                 strokeLinecap: 'round',
+                            },
+                            
+                            trail: {
+                                stroke:'transparent',
                             },
                             
                             text: {
@@ -51,7 +56,6 @@ const Footers = styled.div `
     justify-content: space-around;
     align-items: center;
     bottom: 0;
-    /* / */
     color: #52B6FF;
     background-color: #ffffff;
     box-shadow: 0 5px 5px 1px #00000026;
@@ -68,8 +72,5 @@ const Footers = styled.div `
 const Bola = styled.div `
     width: 91px;
     height: 91px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     margin-bottom: 35px;
 `
